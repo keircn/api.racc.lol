@@ -52,7 +52,7 @@ func SetSeed(t string) {
 // Get index for random hour/day
 
 func GetIndex() int {
-	files, _ := os.ReadDir("capys/")
+	files, _ := os.ReadDir("raccs/")
 	var max_rand = len(files)
 	// set index
 	var index = rand.Intn(max_rand) + 1

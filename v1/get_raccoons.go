@@ -9,10 +9,10 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/looskie/capybara-api/utils"
+	"github.com/venqoi/racc-api/utils"
 )
 
-func GetCapybaras(c *fiber.Ctx) error {
+func GetRaccoons(c *fiber.Ctx) error {
 	var from = c.Query("from")
 	var take = c.Query("take")
 	var random = c.Query("random")
@@ -50,7 +50,7 @@ func GetCapybaras(c *fiber.Ctx) error {
 			index = rand.Intn(utils.NUMBER_OF_IMAGES-parsedFrom) + parsedFrom
 		}
 
-		file, err := os.Open("./capys/capy" + fmt.Sprint(index) + ".jpg")
+		file, err := os.Open("./raccs/racc" + fmt.Sprint(index) + ".jpg")
 
 		if err != nil {
 			println(err.Error())
@@ -63,7 +63,7 @@ func GetCapybaras(c *fiber.Ctx) error {
 		}
 
 		photos = append(photos, utils.ImageStruct{
-			URL:    utils.BaseURL(c) + "/v1/capybara/" + fmt.Sprint(index),
+			URL:    utils.BaseURL(c) + "/v1/raccoon/" + fmt.Sprint(index),
 			Index:  index,
 			Width:  image.Width,
 			Height: image.Height,

@@ -7,10 +7,10 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/looskie/capybara-api/utils"
+	"github.com/venqoi/racc-api/utils"
 )
 
-func GetCapybaraByIndex(c *fiber.Ctx) error {
+func GetRaccoonByIndex(c *fiber.Ctx) error {
 	var index = c.Params("index")
 	var wantsJSON = utils.WantsJSON(c)
 
@@ -25,7 +25,7 @@ func GetCapybaraByIndex(c *fiber.Ctx) error {
 	c.Set("X-Capybara-Index", fmt.Sprint(index))
 
 	if wantsJSON {
-		file, err := os.Open("./capys/capy" + fmt.Sprint(index) + ".jpg")
+		file, err := os.Open("./raccs/racc" + fmt.Sprint(index) + ".jpg")
 
 		if err != nil {
 			println(err.Error())
@@ -42,7 +42,7 @@ func GetCapybaraByIndex(c *fiber.Ctx) error {
 		return c.JSON(utils.Response{
 			Success: true,
 			Data: utils.ImageStruct{
-				URL:    utils.BaseURL(c) + "/v1/capybara/" + index,
+				URL:    utils.BaseURL(c) + "/v1/raccoon/" + index,
 				Index:  parsedIndex,
 				Width:  image.Width,
 				Height: image.Height,
@@ -51,5 +51,5 @@ func GetCapybaraByIndex(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.SendFile("capys/capy" + index + ".jpg")
+	return c.SendFile("raccs/racc" + index + ".jpg")
 }

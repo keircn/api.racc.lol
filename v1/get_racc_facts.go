@@ -4,10 +4,10 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/looskie/capybara-api/utils"
+	"github.com/venqoi/racc-api/utils"
 )
 
-func GetCapyFacts(c *fiber.Ctx) error {
+func GetRaccFacts(c *fiber.Ctx) error {
 	var from = c.Query("from")
 	var take = c.Query("take")
 
@@ -37,8 +37,8 @@ func GetCapyFacts(c *fiber.Ctx) error {
 		})
 	}
 
-	for i := 0 + parsedFrom; i < parsedTake+parsedFrom && i < len(utils.CapybaraFacts); i++ {
-		facts = append(facts, utils.CapybaraFacts[i])
+	for i := 0 + parsedFrom; i < parsedTake+parsedFrom && i < len(utils.RaccoonFacts); i++ {
+		facts = append(facts, utils.RaccoonFacts[i])
 	}
 
 	return c.JSON(utils.Response{

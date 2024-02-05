@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/looskie/capybara-api/utils"
+	"github.com/venqoi/racc-api/utils"
 )
 
 func GetCapyHour(c *fiber.Ctx) error {

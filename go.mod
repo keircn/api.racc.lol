@@ -1,4 +1,4 @@
-module github.com/looskie/capybara-api
+module github.com/venqoi/racc-api
 
 go 1.18
 

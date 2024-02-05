@@ -6,23 +6,19 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/looskie/capybara-api/utils"
+	"github.com/venqoi/racc-api/utils"
 )
 
-func GetCapybaraOfTheDay(c *fiber.Ctx) error {
+func GetRaccoon(c *fiber.Ctx) error {
 	var wantsJSON = utils.WantsJSON(c)
+	randomIndex := utils.GetRandomIndex()
 
-	// sets seed for this day
-	utils.SetSeed("daily")
-	// set index
-	var index = utils.GetIndex()
+	bytes, err := os.ReadFile("./raccs/racc" + fmt.Sprint(randomIndex) + ".jpg")
 
-	bytes, err := os.ReadFile("capys/capy" + fmt.Sprint(index) + ".jpg")
-
-	c.Set("X-Capybara-Index", fmt.Sprint(index))
+	c.Set("X-Capybara-Index", fmt.Sprint(randomIndex))
 
 	if err != nil {
-		println("error while reading capy photo", err.Error())
+		println("error while reading racc photo", err.Error())
 		if wantsJSON {
 			return c.Status(500).JSON(utils.Response{
 				Success: false,
@@ -34,7 +30,7 @@ func GetCapybaraOfTheDay(c *fiber.Ctx) error {
 	}
 
 	if wantsJSON {
-		file, err := os.Open("./capys/capy" + fmt.Sprint(index) + ".jpg")
+		file, err := os.Open("./raccs/racc" + fmt.Sprint(randomIndex) + ".jpg")
 
 		if err != nil {
 			println(err.Error())
@@ -51,11 +47,11 @@ func GetCapybaraOfTheDay(c *fiber.Ctx) error {
 		return c.JSON(utils.Response{
 			Success: true,
 			Data: utils.ImageStruct{
-				URL:    utils.BaseURL(c) + "/v1/capybara/" + fmt.Sprint(index),
-				Index:  index,
+				URL:    utils.BaseURL(c) + "/v1/raccoon/" + fmt.Sprint(randomIndex),
+				Index:  randomIndex,
 				Width:  image.Width,
 				Height: image.Height,
-				Alt:    utils.GetAlti(index),
+				Alt:    utils.GetAlti(randomIndex),
 			},
 		})
 	}

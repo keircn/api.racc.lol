@@ -8,23 +8,23 @@ import (
 	"github.com/pkg/errors"
 )
 
-var capyAlts map[string]string
+var raccAlts map[string]string
 
-func LoadCapyAlts(fn string) error {
+func LoadRaccAlts(fn string) error {
 	content, err := os.ReadFile(fn)
 	if err != nil {
 		return errors.Wrap(err, "reading alt.json")
 	}
-	if err := json.Unmarshal(content, &capyAlts); err != nil {
+	if err := json.Unmarshal(content, &raccAlts); err != nil {
 		return errors.Wrap(err, "unmarshaling alt.json")
 	}
 	return nil
 }
 
 func GetAlt(index string) string {
-	alt, ok := capyAlts[index]
+	alt, ok := raccAlts[index]
 	if !ok {
-		return "a capybara"
+		return "a raccoon"
 	}
 	return alt
 }

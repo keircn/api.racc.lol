@@ -11,17 +11,17 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joho/godotenv"
-	"github.com/looskie/capybara-api/utils"
-	v1 "github.com/looskie/capybara-api/v1"
+	"github.com/venqoi/racc-api/utils"
+	v1 "github.com/venqoi/racc-api/v1"
 )
 
 func main() {
 	godotenv.Load()
 
-	capyImages, _ := os.ReadDir("capys")
-	utils.NUMBER_OF_IMAGES = len(capyImages)
+	raccImages, _ := os.ReadDir("raccs")
+	utils.NUMBER_OF_IMAGES = len(raccImages)
 
-	if err := utils.LoadCapyAlts("utils/alt.json"); err != nil {
+	if err := utils.LoadRaccAlts("utils/alt.json"); err != nil {
 		log.Printf("could not load alt text, using default response: %s", err)
 	}
 
@@ -61,7 +61,7 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(utils.Response{
 			Success: true,
-			Message: "ok you pull up (Powered by hop.io)",
+			Message: "trash panda discovered! you've found the api.",
 		})
 	})
 
@@ -73,17 +73,17 @@ func main() {
 		})
 	})
 
-	v1Group.Get("/capybaras", v1.GetCapybaras)
-	v1Group.Get("/capybara", v1.GetCapybara)
-	v1Group.Get("/capybara/:index", v1.GetCapybaraByIndex)
-	v1Group.Get("/capyoftheday", v1.GetCapybaraOfTheDay)
-	v1Group.Get("/capyhour", v1.GetCapyHour)
-	v1Group.Get("/capyofthehour", v1.GetCapyHour) // Alias
+	v1Group.Get("/raccoons", v1.GetRacccoons)
+	v1Group.Get("/raccoon", v1.GetRaccoon)
+	v1Group.Get("/raccoon/:index", v1.GetRaccoonaByIndex)
+	v1Group.Get("/raccoftheday", v1.GetRaccoonOfTheDay)
+	v1Group.Get("/racchour", v1.GetRaccHour)
+	v1Group.Get("/raccofthehour", v1.GetRaccHour) // Alias
 
 	// Capybara facts
 
-	v1Group.Get("/fact", v1.GetCapyFact)
-	v1Group.Get("/facts", v1.GetCapyFacts)
+	v1Group.Get("/fact", v1.GetRaccFact)
+	v1Group.Get("/facts", v1.GetRaccFacts)
 
 	var port = os.Getenv("PORT")
 
