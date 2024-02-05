@@ -22,7 +22,7 @@ func GetRaccoonByIndex(c *fiber.Ctx) error {
 		})
 	}
 
-	c.Set("X-Capybara-Index", fmt.Sprint(index))
+	c.Set("X-Raccoon-Index", fmt.Sprint(index))
 
 	if wantsJSON {
 		file, err := os.Open("./raccs/racc" + fmt.Sprint(index) + ".jpg")

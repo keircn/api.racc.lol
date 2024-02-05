@@ -69,13 +69,13 @@ func main() {
 	v1Group.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(utils.Response{
 			Success: true,
-			Message: "welcome to v1 of capybara heaven (Powered by hop.io)",
+			Message: "trash pandas favourite v1, welcome to the trash can.",
 		})
 	})
 
-	v1Group.Get("/raccoons", v1.GetRacccoons)
+	v1Group.Get("/raccoons", v1.GetRaccoons)
 	v1Group.Get("/raccoon", v1.GetRaccoon)
-	v1Group.Get("/raccoon/:index", v1.GetRaccoonaByIndex)
+	v1Group.Get("/raccoon/:index", v1.GetRaccoonByIndex)
 	v1Group.Get("/raccoftheday", v1.GetRaccoonOfTheDay)
 	v1Group.Get("/racchour", v1.GetRaccHour)
 	v1Group.Get("/raccofthehour", v1.GetRaccHour) // Alias

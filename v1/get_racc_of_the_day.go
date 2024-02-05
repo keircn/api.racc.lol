@@ -19,7 +19,7 @@ func GetRaccoonOfTheDay(c *fiber.Ctx) error {
 
 	bytes, err := os.ReadFile("raccs/racc" + fmt.Sprint(index) + ".jpg")
 
-	c.Set("X-Capybara-Index", fmt.Sprint(index))
+	c.Set("X-Raccoon-Index", fmt.Sprint(index))
 
 	if err != nil {
 		println("error while reading racc photo", err.Error())

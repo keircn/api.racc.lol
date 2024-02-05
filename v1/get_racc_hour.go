@@ -9,7 +9,7 @@ import (
 	"github.com/venqoi/racc-api/utils"
 )
 
-func GetCapyHour(c *fiber.Ctx) error {
+func GetRaccHour(c *fiber.Ctx) error {
 	var wantsJSON = utils.WantsJSON(c)
 
 	// sets seed for this hour
@@ -18,12 +18,12 @@ func GetCapyHour(c *fiber.Ctx) error {
 	// get random index
 	var index = utils.GetIndex()
 
-	bytes, err := os.ReadFile("capys/capy" + fmt.Sprint(index) + ".jpg")
+	bytes, err := os.ReadFile("raccs/racc" + fmt.Sprint(index) + ".jpg")
 
-	c.Set("X-Capybara-Index", fmt.Sprint(index))
+	c.Set("X-Raccoon-Index", fmt.Sprint(index))
 
 	if err != nil {
-		println("error while reading capy photo", err.Error())
+		println("error while reading racc photo", err.Error())
 		if wantsJSON {
 			return c.Status(500).JSON(utils.Response{
 				Success: false,
@@ -35,7 +35,7 @@ func GetCapyHour(c *fiber.Ctx) error {
 	}
 
 	if wantsJSON {
-		file, err := os.Open("./capys/capy" + fmt.Sprint(index) + ".jpg")
+		file, err := os.Open("./raccs/racc" + fmt.Sprint(index) + ".jpg")
 
 		if err != nil {
 			println(err.Error())
@@ -52,7 +52,7 @@ func GetCapyHour(c *fiber.Ctx) error {
 		return c.JSON(utils.Response{
 			Success: true,
 			Data: utils.ImageStruct{
-				URL:    utils.BaseURL(c) + "/v1/capybara/" + fmt.Sprint(index),
+				URL:    utils.BaseURL(c) + "/v1/raccoon/" + fmt.Sprint(index),
 				Index:  index,
 				Width:  image.Width,
 				Height: image.Height,
