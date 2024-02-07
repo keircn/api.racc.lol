@@ -1,11 +1,10 @@
 
-# capybara-api
+# raccoon-api
 
-capybara-api is a sweet, cute, fast API to get a whole bunch of images or a random image of a capybara
+racc API is a fork of capybara-api, the fastest, most lightest, most adorable capybara API to ever exist. racc api on the other hand is the coolest and funniest raccoon api on this planet!
 
 ## Documentation
-Documentation can be located [here](https://capy.lol#documentation)
+Documentation can be located [here](https://racc.lol#documentation)
 
 Note: 
-- API Base URL is `https://api.capy.lol`
-- 500 requests/30s
+- API Base URL is `https://racc.capy.lol`
