@@ -32,3 +32,16 @@ func GetAlt(index string) string {
 func GetAlti(index int) string {
 	return GetAlt(strconv.Itoa(index))
 }
+
+func GetAltVideo(index string) string {
+	alt, ok := raccAlts[index]
+	if !ok {
+		return "a raccoon video"
+	}
+
+	return alt
+}
+
+func GetAltv(index int) string {
+	return GetAltVideo(strconv.Itoa(index))
+}

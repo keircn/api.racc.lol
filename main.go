@@ -82,6 +82,7 @@ func main() {
 	v1Group.Get("/racchour", v1.GetRaccHour)
 	v1Group.Get("/raccofthehour", v1.GetRaccHour)
 	v1Group.Get("/video", v1.GetRaccoonVideo)
+	v1Group.Get("/video/:index", v1.GetRaccoonVideoByIndex)
 
 	// Capybara facts
 
