@@ -45,7 +45,7 @@ func GetRaccoonVideo(c *fiber.Ctx) error {
 		return c.JSON(utils.Response{
 			Success: true,
 			Data: utils.VideoStruct{
-				URL:   utils.BaseURL(c) + "/v1/raccoon/video/" + filepath.Base(videoPath),
+				URL:   utils.BaseURL(c) + "/v1/video/" + filepath.Base(videoPath),
 				Index: randomIndex,
 				Alt:   utils.GetAlti(randomIndex),
 			},
