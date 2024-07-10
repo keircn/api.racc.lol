@@ -2,6 +2,7 @@ package utils
 
 var (
 	NUMBER_OF_IMAGES int
+	NUMBER_OF_VIDEOS int
 )
 
 type Response struct {
@@ -20,4 +21,10 @@ type ImageStruct struct {
 	Width  int    `json:"width"`
 	Height int    `json:"height"`
 	Alt    string `json:"alt"`
+}
+
+type VideoStruct struct {
+    URL   string `json:"url"`
+    Index int    `json:"index"`
+    Alt   string `json:"alt"`
 }

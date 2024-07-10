@@ -12,3 +12,12 @@ func GetRandomIndex() int {
 
 	return randomIndex
 }
+
+func GetRandomIndexVideo() int {
+	randomIndex := rand.Intn(NUMBER_OF_VIDEOS)
+	if randomIndex == 0 {
+		randomIndex = 1
+	}
+
+	return randomIndex
+}
