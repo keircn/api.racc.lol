@@ -19,7 +19,9 @@ func main() {
 	godotenv.Load()
 
 	raccImages, _ := os.ReadDir("raccs")
+	raccVideos, _ := os.ReadDir("raccs/videos")
 	utils.NUMBER_OF_IMAGES = len(raccImages)
+	utils.NUMBER_OF_VIDEOS = len(raccVideos)
 
 	if err := utils.LoadRaccAlts("utils/alt.json"); err != nil {
 		log.Printf("could not load alt text, using default response: %s", err)
@@ -78,7 +80,8 @@ func main() {
 	v1Group.Get("/raccoon/:index", v1.GetRaccoonByIndex)
 	v1Group.Get("/raccoftheday", v1.GetRaccoonOfTheDay)
 	v1Group.Get("/racchour", v1.GetRaccHour)
-	v1Group.Get("/raccofthehour", v1.GetRaccHour) // Alias
+	v1Group.Get("/raccofthehour", v1.GetRaccHour)
+	v1Group.Get("/video", v1.GetRaccoonVideo)
 
 	// Capybara facts
 
