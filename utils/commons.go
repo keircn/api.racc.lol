@@ -3,6 +3,7 @@ package utils
 var (
 	NUMBER_OF_IMAGES int
 	NUMBER_OF_VIDEOS int
+	NUMBER_OF_TRANS int
 )
 
 type Response struct {

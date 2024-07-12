@@ -20,8 +20,10 @@ func main() {
 
 	raccImages, _ := os.ReadDir("raccs")
 	raccVideos, _ := os.ReadDir("raccs/videos")
+	raccTrans, _ := os.ReadDir("raccs/transparent")
 	utils.NUMBER_OF_IMAGES = len(raccImages)
 	utils.NUMBER_OF_VIDEOS = len(raccVideos)
+	utils.NUMBER_OF_TRANS = len(raccTrans)
 
 	if err := utils.LoadRaccAlts("utils/alt.json"); err != nil {
 		log.Printf("could not load alt text, using default response: %s", err)
@@ -47,7 +49,7 @@ func main() {
 	}))
 
 	app.Use(limiter.New(limiter.Config{
-		Max:        500,
+		Max:        30,
 		Expiration: 30 * time.Second,
 		LimitReached: func(c *fiber.Ctx) error {
 			return c.Status(429).JSON(utils.Response{
@@ -77,6 +79,7 @@ func main() {
 
 	v1Group.Get("/raccoons", v1.GetRaccoons)
 	v1Group.Get("/raccoon", v1.GetRaccoon)
+	v1Group.Get("/raccoon/transparent/:index", v1.GetRaccoonTransparentByIndex)
 	v1Group.Get("/raccoon/:index", v1.GetRaccoonByIndex)
 	v1Group.Get("/raccoftheday", v1.GetRaccoonOfTheDay)
 	v1Group.Get("/racchour", v1.GetRaccHour)
