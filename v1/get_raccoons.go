@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	_ "image/jpeg"
+	_ "image/png"
 	"math/rand"
 	"os"
 	"strconv"
@@ -16,6 +17,7 @@ func GetRaccoons(c *fiber.Ctx) error {
 	var from = c.Query("from")
 	var take = c.Query("take")
 	var random = c.Query("random")
+	var wantsTRANS = utils.WantsTRANS(c)
 
 	if len(from) == 0 {
 		from = "1"
@@ -44,33 +46,42 @@ func GetRaccoons(c *fiber.Ctx) error {
 	var photos []utils.ImageStruct
 	for i := 0 + parsedFrom; i < parsedTake+parsedFrom && i < utils.NUMBER_OF_IMAGES; i++ {
 
-		/* if user wants random index */
+		var filePath string
 		var index = i
+		var url string
 		if random == "true" {
 			index = rand.Intn(utils.NUMBER_OF_IMAGES-parsedFrom) + parsedFrom
 		}
 
-		file, err := os.Open("./raccs/racc" + fmt.Sprint(index) + ".jpg")
-
-		if err != nil {
-			println(err.Error())
+		if wantsTRANS {
+			filePath = fmt.Sprintf("./raccs/transparent/racc%d.png", index)
+			url = utils.BaseURL(c) + "/v1/raccoon/transparent/" + fmt.Sprint(index)
+		} else {
+			filePath = fmt.Sprintf("./raccs/racc%d.jpg", index)
+			url = utils.BaseURL(c) + "/v1/raccoon/" + fmt.Sprint(index)
 		}
 
-		image, _, err := image.DecodeConfig(file)
+		file, err := os.Open(filePath)
+		if err != nil {
+			println(err.Error())
+			continue
+		}
+
+		imageConfig, _, err := image.DecodeConfig(file)
+		file.Close()
 
 		if err != nil {
 			println(err.Error())
+			continue
 		}
 
 		photos = append(photos, utils.ImageStruct{
-			URL:    utils.BaseURL(c) + "/v1/raccoon/" + fmt.Sprint(index),
+			URL:    url,
 			Index:  index,
-			Width:  image.Width,
-			Height: image.Height,
+			Width:  imageConfig.Width,
+			Height: imageConfig.Height,
 			Alt:    utils.GetAlti(index),
 		})
-
-		file.Close()
 	}
 
 	return c.JSON(utils.Response{
