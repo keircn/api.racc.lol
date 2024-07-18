@@ -21,3 +21,12 @@ func GetRandomIndexVideo() int {
 
 	return randomIndex
 }
+
+func GetRandomIndexTrans() int {
+	randomIndex := rand.Intn(NUMBER_OF_TRANS)
+	if randomIndex == 0 {
+		randomIndex = 1
+	}
+
+	return randomIndex
+}

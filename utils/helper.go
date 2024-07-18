@@ -19,6 +19,16 @@ func WantsJSON(c *fiber.Ctx) bool {
 	return string(c.Request().Header.Peek("Accept")) == "application/json"
 }
 
+func WantsTRANS(c *fiber.Ctx) bool {
+	if c.Query("transparent") == "true" {
+		return true
+	} else if c.Query("transparent") == "false" {
+		return false
+	}
+
+	return false
+}
+
 /*
 	Made our own with "://" because i dont think it should be nec. to have a
 
