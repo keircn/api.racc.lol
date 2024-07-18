@@ -7,4 +7,4 @@ racc API is a fork of capybara-api, the fastest, most lightest, most adorable ca
 Documentation can be located [here](https://racc.lol#documentation)
 
 Note: 
-- API Base URL is `https://racc.capy.lol`
+- API Base URL is `https://api.racc.lol`
