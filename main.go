@@ -21,9 +21,9 @@ func main() {
 	raccImages, _ := os.ReadDir("raccs")
 	raccVideos, _ := os.ReadDir("raccs/videos")
 	raccTrans, _ := os.ReadDir("raccs/transparent")
-	utils.NUMBER_OF_IMAGES = len(raccImages)
-	utils.NUMBER_OF_VIDEOS = len(raccVideos)
-	utils.NUMBER_OF_TRANS = len(raccTrans)
+	utils.NUMBER_OF_IMAGES = len(raccImages) + 1
+	utils.NUMBER_OF_VIDEOS = len(raccVideos) + 1
+	utils.NUMBER_OF_TRANS = len(raccTrans) + 1
 
 	if err := utils.LoadRaccAlts("utils/alt.json"); err != nil {
 		log.Printf("could not load alt text, using default response: %s", err)
