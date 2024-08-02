@@ -1,6 +1,6 @@
 .env
 *.log
 tmp
-capybara-api.*
-capybara-api
+racc-api.*
+racc-api
 .DS_Store
