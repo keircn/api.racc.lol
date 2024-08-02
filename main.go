@@ -28,8 +28,7 @@ var notConnectedMessages = []string{
 	"a raccoon ate the database",
 	"the database is in the trash",
 	"the database scurried away",
-	"missing raccoon- i mean database"
-
+	"missing raccoon- i mean database",
 }
 
 func main() {
