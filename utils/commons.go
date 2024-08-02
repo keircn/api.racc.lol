@@ -3,13 +3,22 @@ package utils
 var (
 	NUMBER_OF_IMAGES int
 	NUMBER_OF_VIDEOS int
-	NUMBER_OF_TRANS int
+	NUMBER_OF_TRANS  int
 )
 
 type Response struct {
 	Success bool        `json:"success"`
 	Message string      `json:"message,omitempty"`
 	Data    interface{} `json:"data,omitempty"`
+}
+
+type StatsResponse struct {
+	Success           bool   `json:"success"`
+	Message           string `json:"message"`
+	Requests          any    `json:"requests"`
+	Images            int    `json:"images"`
+	Videos            int    `json:"videos"`
+	TransparentImages int    `json:"transparent_images"`
 }
 
 type FactStruct struct {
@@ -25,7 +34,7 @@ type ImageStruct struct {
 }
 
 type VideoStruct struct {
-    URL   string `json:"url"`
-    Index int    `json:"index"`
-    Alt   string `json:"alt"`
+	URL   string `json:"url"`
+	Index int    `json:"index"`
+	Alt   string `json:"alt"`
 }
