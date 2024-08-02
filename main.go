@@ -24,9 +24,12 @@ import (
 var requestCountCollection *mongo.Collection
 var isDbConnected bool
 var notConnectedMessages = []string{
-	"Not connected to database",
+	"a goose stole the database from the trash can",
 	"a raccoon ate the database",
 	"the database is in the trash",
+	"the database scurried away",
+	"missing raccoon- i mean database"
+
 }
 
 func main() {
