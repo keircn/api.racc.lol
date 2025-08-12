@@ -299,7 +299,7 @@ export const raccsController = new Elysia()
       const files = await fileService.listFiles("videos", ".mp4");
 
       if (files.length === 0) {
-        return { success: false, error: "No videos found" };
+        return respond(404, { success: false, error: "No videos found" });
       }
 
       const randomIndex = Math.floor(Math.random() * files.length);
@@ -307,7 +307,7 @@ export const raccsController = new Elysia()
       const fileBuffer = await fileService.getFile(selectedFile.path);
 
       if (!fileBuffer) {
-        return { success: false, error: "Video not found" };
+        return respond(404, { success: false, error: "Video not found" });
       }
 
       const filename = selectedFile.name;

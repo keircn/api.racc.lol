@@ -3,10 +3,13 @@ interface RateLimitEntry {
   resetTime: number;
 }
 
+
 class RateLimiter {
   private requests = new Map<string, RateLimitEntry>();
   private readonly maxRequests: number;
   private readonly windowMs: number;
+  private lastCleanup: number = 0;
+  private readonly cleanupInterval: number = 60000;
 
   constructor(maxRequests: number, windowMs: number) {
     this.maxRequests = maxRequests;
@@ -26,11 +29,36 @@ class RateLimiter {
     );
   }
 
+  // run the cleanup every minute to be more proactive,
+  // this avoids a memory leak when expired entries aren't
+  // cleaned up and remain in memory indefinitely.
+  // i also added a hard limit so it'll automatically
+  // trim the fat if too many entries are logged
+
   private cleanupExpiredEntries(): void {
     const now = Date.now();
+    
+    if (now - this.lastCleanup < this.cleanupInterval) {
+      return;
+    }
+    
+    this.lastCleanup = now;
+    
     for (const [key, entry] of this.requests.entries()) {
       if (now > entry.resetTime) {
         this.requests.delete(key);
+      }
+    }
+    
+    if (this.requests.size > 10000) {
+      const sortedEntries = Array.from(this.requests.entries())
+        .sort(([, a], [, b]) => a.resetTime - b.resetTime);
+      
+      const toKeep = sortedEntries.slice(-5000);
+      this.requests.clear();
+      
+      for (const [key, entry] of toKeep) {
+        this.requests.set(key, entry);
       }
     }
   }

@@ -1,7 +1,0 @@
-name = "api"
-compatibility_date = "2025-05-17"
-node_compat = true
-
-[[r2_buckets]]
-binding = "racclol"
-bucket_name = "racc-lol"
