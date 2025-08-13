@@ -21,12 +21,35 @@ class RateLimiter {
     const xForwardedFor = request.headers.get("X-Forwarded-For");
     const xRealIP = request.headers.get("X-Real-IP");
 
-    return (
+    const ip = (
       cfConnectingIP ||
       (xForwardedFor && xForwardedFor.split(",")[0].trim()) ||
       xRealIP ||
-      "unknown"
+      null
     );
+
+    // we want to generate a unique identifier for unknown users
+    // to avoid it being used as a rate limit bypass
+    if (!ip) {
+      const userAgent = request.headers.get("User-Agent") || "";
+      const acceptLanguage = request.headers.get("Accept-Language") || "";
+      const acceptEncoding = request.headers.get("Accept-Encoding") || "";
+      
+      const fingerprint = `${userAgent}-${acceptLanguage}-${acceptEncoding}`;
+      return `unknown-${this.simpleHash(fingerprint)}`;
+    }
+
+    return ip;
+  }
+
+  private simpleHash(str: string): string {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    return Math.abs(hash).toString(36);
   }
 
   // run the cleanup every minute to be more proactive,
