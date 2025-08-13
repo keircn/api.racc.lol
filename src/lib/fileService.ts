@@ -10,45 +10,49 @@ export interface FileInfo {
 export class LocalFileService {
   private readonly basePath: string;
 
-  constructor(basePath: string = "./src/raccs") {
+  constructor(basePath = "./src/raccs") {
     this.basePath = resolve(basePath);
   }
 
   private getFullPath(filePath: string): string {
+    if (!filePath) {
+      return this.basePath;
+    }
+
     const fullPath = resolve(join(this.basePath, filePath));
-    
-    // this fixes a path traversal vulnerability since we weren't validating this before
     const relativePath = relative(this.basePath, fullPath);
-    if (relativePath.startsWith('..') || resolve(relativePath) !== relativePath) {
+
+    if (relativePath.startsWith("..") || relativePath.includes("..")) {
       throw new Error(`Access denied: Path traversal detected for ${filePath}`);
     }
-    
+
     return fullPath;
   }
 
-  async listFiles(
-    subPath: string = "",
-    extension?: string
-  ): Promise<FileInfo[]> {
+  async listFiles(subPath = "", extension?: string): Promise<FileInfo[]> {
     try {
       const fullPath = this.getFullPath(subPath);
       const files = await readdir(fullPath);
 
-      const fileInfos: FileInfo[] = [];
+      const fileStats = await Promise.all(
+        files.map(async (file) => {
+          const filePath = join(fullPath, file);
+          const stats = await stat(filePath);
+          return { file, stats, isFile: stats.isFile() };
+        })
+      );
 
-      for (const file of files) {
-        const stats = await stat(join(fullPath, file));
-
-        if (stats.isFile() && (!extension || file.endsWith(extension))) {
-          fileInfos.push({
-            name: file,
-            path: join(subPath, file),
-            size: stats.size,
-          });
-        }
-      }
-
-      return fileInfos.sort((a, b) => a.name.localeCompare(b.name));
+      return fileStats
+        .filter(
+          ({ isFile, file }) =>
+            isFile && (!extension || file.endsWith(extension))
+        )
+        .map(({ file, stats }) => ({
+          name: file,
+          path: join(subPath, file),
+          size: stats.size,
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
     } catch (error) {
       console.error(`Error listing files in ${subPath}:`, error);
       return [];
