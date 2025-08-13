@@ -1,5 +1,5 @@
 import { readdir, readFile, stat } from "fs/promises";
-import { join } from "path";
+import { join, resolve, relative } from "path";
 
 export interface FileInfo {
   name: string;
@@ -8,10 +8,22 @@ export interface FileInfo {
 }
 
 export class LocalFileService {
-  constructor(private basePath: string = "./src/raccs") {}
+  private readonly basePath: string;
+
+  constructor(basePath: string = "./src/raccs") {
+    this.basePath = resolve(basePath);
+  }
 
   private getFullPath(filePath: string): string {
-    return join(this.basePath, filePath);
+    const fullPath = resolve(join(this.basePath, filePath));
+    
+    // this fixes a path traversal vulnerability since we weren't validating this before
+    const relativePath = relative(this.basePath, fullPath);
+    if (relativePath.startsWith('..') || resolve(relativePath) !== relativePath) {
+      throw new Error(`Access denied: Path traversal detected for ${filePath}`);
+    }
+    
+    return fullPath;
   }
 
   async listFiles(
