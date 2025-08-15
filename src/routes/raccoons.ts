@@ -109,9 +109,8 @@ export const raccsController = new Elysia()
             JSON.stringify({
               success: true,
               data: {
-                url: `${baseUrl}/raccoon`,
+                url: `${baseUrl}/raccoon/${imageIndex + 1}`,
                 size: selectedFile.size,
-                type: period || "random",
                 contentType: "image/jpeg",
               },
             }),
@@ -420,9 +419,8 @@ export const raccsController = new Elysia()
             JSON.stringify({
               success: true,
               data: {
-                url: `${baseUrl}/meme`,
+                url: `${baseUrl}/meme/${imageIndex + 1}`,
                 size: selectedFile.size,
-                type: period || "random",
                 contentType: "image/jpeg",
               },
             }),
